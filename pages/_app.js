@@ -1,7 +1,16 @@
-import '../styles/globals.css'
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Head>
+        <title>TinCan</title>
+        <meta name="description" content="online messaging service" />
+        <link rel="icon" href="/images/logo.svg" />
+      </Head>
+      <Component {...pageProps} />
+    </>
+  );
 }
 
-export default MyApp
+export default MyApp;
