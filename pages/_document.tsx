@@ -1,8 +1,16 @@
+import { css } from '@emotion/react';
 import { Head, Html, Main, NextScript } from 'next/document';
+
+const globalStyles = css`
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+  }
+`;
 
 export default function Document() {
   return (
-    <Html>
+    <Html css={globalStyles}>
       <Head>
         <link
           rel="stylesheet"

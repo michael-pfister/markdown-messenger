@@ -1,15 +1,23 @@
+import { css } from '@emotion/react';
+import { NextSeo } from 'next-seo';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <NextSeo
+        title="TinCan"
+        description="online messenger"
+        canonical="www.tincan.com"
+      />
       <Head>
-        <title>TinCan</title>
-        <meta name="description" content="online messaging service" />
         <link rel="icon" href="/images/logo.svg" />
       </Head>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
