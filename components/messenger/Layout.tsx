@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Autocomplete, TextField } from '@mui/material';
 import React from 'react';
-import { ChatList as DatabaseChatList } from '../utilities/database';
+import { ChatList as DatabaseChatList } from '../../utilities/database';
 import ChatList from './header/ChatList';
 import Chat from './main/Chat';
 
@@ -26,11 +26,7 @@ const searchStyles = css`
   width: 100%;
 `;
 
-type LayoutProps = {
-  children: JSX.Element;
-};
-
-export default function Layout({ children }: LayoutProps) {
+export default function Layout() {
   const [search, setSearch] = React.useState('');
 
   return (
@@ -50,7 +46,6 @@ export default function Layout({ children }: LayoutProps) {
       </header>
       <main>
         <Chat />
-        {children}
       </main>
     </div>
   );

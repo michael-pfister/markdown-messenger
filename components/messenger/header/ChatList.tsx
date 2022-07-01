@@ -3,7 +3,7 @@ import { List } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
 import { ListItemButton } from '@mui/material';
 import { useState } from 'react';
-import { ChatList as DatabaseChatList } from '../../utilities/database';
+import { ChatList as DatabaseChatList } from '../../../utilities/database';
 import ChatListItem from './ChatListItem';
 
 const chatListStyles = css`

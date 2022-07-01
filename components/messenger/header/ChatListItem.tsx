@@ -5,7 +5,7 @@ import {
   ListItemAvatar,
   ListItemText,
 } from '@material-ui/core';
-import { ChatListItemData } from '../../utilities/database';
+import { ChatListItemData } from '../../../utilities/database';
 
 const chatListItemStyles = css`
   cursor: pointer;

@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Avatar, Card, CardContent } from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
 import { useEffect } from 'react';
-import { messageCluster } from '../../utilities/database';
+import { messageCluster } from '../../../utilities/database';
 
 const chatHistoryStyles = css`
   height: calc(100vh - 60px);
