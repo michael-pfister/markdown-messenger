@@ -10,7 +10,7 @@ const globalStyles = css`
 
 export default function Document() {
   return (
-    <Html css={globalStyles}>
+    <Html css={globalStyles} lang={'en'}>
       <Head>
         <link
           rel="stylesheet"

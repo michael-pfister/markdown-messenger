@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <NextSeo
         title="TinCan"
         description="online messenger"
-        canonical="www.tincan.com"
+        canonical="https://www.tincan.com/"
       />
       <Head>
         <link rel="icon" href="/images/logo.svg" />

@@ -4,7 +4,7 @@ CREATE KEYSPACE IF NOT EXISTS markdown_messenger WITH REPLICATION = { 'class' : 
 -- Create table for user credentials
 CREATE TABLE IF NOT EXISTS markdown_messenger.credentials_by_user (
 email TEXT PRIMARY KEY,
-password text
+password_hash text
 )
 WITH comment = 'Q1. Find user credentials';
 
@@ -63,11 +63,11 @@ INSERT INTO markdown_messenger.message_by_user
 VALUES
 ('marge.simpson@gmail.com', 'homer.simpson@gmail.com', toTimeStamp(now()), 'I did get your donuts');
 
-INSERT INTO store.shopping_cart
+/* INSERT INTO store.shopping_cart
 (userid, item_count, last_update_timestamp)
 VALUES ('9876', 2, toTimeStamp(now()));
 INSERT INTO store.shopping_cart
 (userid, item_count, last_update_timestamp)
 VALUES ('1234', 5, toTimeStamp(now()));
-
+ */
 -- quickstart database https://cassandra.apache.org/_/quickstart.html

@@ -1,129 +1,72 @@
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
+import { css } from '@emotion/react';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import LockIcon from '@mui/icons-material/Lock';
-import React from 'react';
+import { Grid } from '@mui/material';
+import Link from 'next/link';
+import AuthenticationForm from '../components/AuthenticationForm';
 
-const MadeWithLove = () => (
-  <Typography variant="body2" color="textSecondary" align="center">
-    {'Built with love by the '}
-    <Link color="inherit" href="https://material-ui.com/">
-      Material-UI
-    </Link>
-    {' team.'}
-  </Typography>
-);
+const styles = {
+  links: css`
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100vh',
-  },
-  image: {
-    backgroundImage:
-      'url(https://swedroid.se/wp-content/uploads/2019/03/facebook-messenger-natt.jpg)',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+    a {
+      color: darkblue;
+    }
+  `,
+};
 
-const SignInSide = () => {
-  const classes = useStyles();
-
+const SignIn = () => {
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Box mt={5}>
-              <MadeWithLove />
-            </Box>
-          </form>
-        </div>
+    <AuthenticationForm heading="Sign In">
+      <Grid container spacing={2} justifyContent={'center'}>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            name="email"
+            label="Email Address"
+            fullWidth
+            autoComplete="email"
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            type="password"
+            name="password"
+            label="Password"
+            fullWidth
+            autoComplete="new-password"
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button type="submit" fullWidth variant="contained" color="primary">
+            Sign In
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <div css={styles.links}>
+            <Link href="/">Forgot Password?</Link>
+            <Link href="/signup">Dont have an Account? Sign Up</Link>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </AuthenticationForm>
   );
 };
 
-export default SignInSide;
+export default SignIn;
