@@ -1,5 +1,5 @@
-# <img alt="logo" src="https://github.com/stracciatella27/tincan/blob/main/public/images/logo.svg" width="100"/> TinCan
-TinCan is an online messaging service.
+# <img alt="logo" src="https://github.com/stracciatella27/tincan/blob/main/public/images/logo.svg" width="100"/> markdown messenger
+An online messaging service for that supports markdown.
 
 ## Figma Draft
 https://www.figma.com/file/auL2Qi4gDvZzRxmbF53kjE/online-messenger
