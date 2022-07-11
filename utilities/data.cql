@@ -37,8 +37,6 @@ WITH comment = 'Q4. Find messages for a given contact'
 AND CLUSTERING ORDER BY (target ASC, created_at DESC);
 
 
-
-
 -- DONT COPY THIS
 
 -- DEBUG QUERIES
@@ -48,6 +46,10 @@ SELECT * FROM markdown_messenger.contact_by_user;
 SELECT * FROM markdown_messenger.message_by_user;
 
 -- Insert some data
+
+INSERT INTO markdown_messenger.credentials_by_user
+(email, password_hash)
+VALUES ('melon.musk@gmail.com', '6bY_:td823bUZD7');
 
 INSERT INTO markdown_messenger.contact_by_user
 (email, contact)
@@ -71,3 +73,4 @@ INSERT INTO store.shopping_cart
 VALUES ('1234', 5, toTimeStamp(now()));
  */
 -- quickstart database https://cassandra.apache.org/_/quickstart.html
+-- run cassanrda docker image and expose to port 9042 -> docker run -d --name cassandra -p 9042:9042 cassandra
