@@ -50,7 +50,7 @@ export default async function handler(
                     res.status(400).json(`Invalid Email ${req.body.email}`);
                 }
             }catch(error){
-                console.log(error);
+                console.log(`Error during registration: ${error}`);
                 res.status(400).json(`Bad Request`);
             }
             

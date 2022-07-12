@@ -5,11 +5,11 @@ import jwt from 'jsonwebtoken';
 
 type Data = {};
 
-interface EnviromentVariables {
+export interface EnviromentVariables {
   [key: string]: string;
 }
 
-type JwtPayload = {
+export type JwtPayload = {
   user: string,
   iat: EpochTimeStamp,
   exp: EpochTimeStamp
@@ -26,8 +26,6 @@ const cassandraClient = new cassandra.Client({
   localDataCenter: 'datacenter1',
   keyspace: 'markdown_messenger',
 });
-
-const query = 'SELECT * FROM markdown_messenger.message_by_user;';
 
 export default async function handler(
   req: NextApiRequest,
@@ -68,7 +66,7 @@ export default async function handler(
             break;
 
           default:
-            console.log(error);
+            console.log(`Error whilst getting a users contacts: ${error}`);
             res.status(400).json(`Bad Request`);
         }
       }

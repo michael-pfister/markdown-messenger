@@ -66,7 +66,7 @@ const sendMail = async (targetEmailAddress:string, targetUserName: string, verif
   };
   
   transporter.sendMail(mailOptions, function (err) {
-    err && console.log(err);
+    err && console.log(`Error whilst sending an email: ${err}`);
   });
 }
 

@@ -1,20 +1,29 @@
 import { css } from '@emotion/react';
-import { Avatar, Card, CardContent } from '@mui/material';
+import { Grid } from '@material-ui/core';
+import { PeopleSharp } from '@mui/icons-material';
+import { Alert, AlertTitle, Avatar, Card, CardContent } from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { messageCluster } from '../../../utilities/database';
+import { ContactInformation } from '../Layout';
+import { ChatHistoryElement } from './Chat';
 
 const chatHistoryStyles = css`
-  height: calc(100vh - 60px);
+  height: calc(100vh - 0);
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
   }
 `;
 
-const localSenderId = 'd3kc4so2hw';
-
-export default function ChatHistory() {
+export default function ChatHistory(props: {
+  selectedContact: ContactInformation, 
+  chatHistory: Array<ChatHistoryElement>,
+  localAvatarURL: string,
+  contactAvatarURL: string,
+  messagingInterfaceHeight: number
+}) {
+  
   // 💀
   useEffect(() => {
     const chatHistory = document.getElementById('chat-history');
@@ -24,16 +33,22 @@ export default function ChatHistory() {
   }, []);
 
   return (
-    <div css={chatHistoryStyles} id={`chat-history`}>
-      {messageCluster.map((messageClusterItem) => {
+    <div css={css`
+    height: calc(100vh - ${props.messagingInterfaceHeight}px);
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+  `} id={`chat-history`}>
+      {props.chatHistory && props.chatHistory.map((chatHistoryElement) => {
         return (
           <div
-            key={`ChatHistory_message_${messageClusterItem.id}`}
+            key={`ChatHistory_message_${chatHistoryElement.email}_${chatHistoryElement.created_at}`}
             css={css`
               margin: 50px 0;
               display: flex;
               gap: 10px;
-              ${messageClusterItem.senderId === localSenderId
+              ${chatHistoryElement.email !== props.selectedContact.email
                 ? `justify-content: right;
                   flex-direction: row-reverse;
                   padding-right: 10px;
@@ -44,24 +59,24 @@ export default function ChatHistory() {
             `}
           >
             <Avatar
-              alt={`profile picture ${messageClusterItem.senderId}`}
+              alt={`profile picture ${chatHistoryElement.email}`}
               src={
-                messageClusterItem.senderId === localSenderId
-                  ? `https://www.aroged.com/wp-content/uploads/2022/04/Hackers-stole-tokens-worth-about-3-million-from-NFT-monkey.jpg`
-                  : `https://pbs.twimg.com/profile_images/1484604685671493632/nifvTODz_400x400.png`
+                chatHistoryElement.email !== props.selectedContact.email
+                  ? props.localAvatarURL
+                  : props.contactAvatarURL
               } // get corresponding Avatar from database
             />
             <Card
               css={css`
                 color: white;
                 max-width: 50%;
-                ${messageClusterItem.senderId === localSenderId
+                ${chatHistoryElement.email !== props.selectedContact.email
                   ? `background-color: DodgerBlue;`
                   : `background-color: DimGray;`}
               `}
             >
               <CardContent>
-                <MuiMarkdown>{messageClusterItem.message}</MuiMarkdown>
+                <MuiMarkdown>{chatHistoryElement.message}</MuiMarkdown>
               </CardContent>
             </Card>
           </div>

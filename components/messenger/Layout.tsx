@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Autocomplete, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { ChatList as DatabaseChatList } from '../../utilities/database';
-import ChatList from './header/ChatList';
+import ContactList from './header/ContactList';
 import Chat from './main/Chat';
 
 export type ContactInformation = {
@@ -52,10 +52,10 @@ export default function Layout() {
             setSearch(event.target.value);
           }}
         />
-        <ChatList search={search} setSearch={setSearch} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} contacts={contacts} setContacts={setContacts}/>
+        <ContactList search={search} setSearch={setSearch} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} contacts={contacts} setContacts={setContacts}/>
       </header>
       <main>
-        <Chat />
+        <Chat selectedContact={contacts[selectedIndex]}/>
       </main>
     </div>
   );

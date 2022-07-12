@@ -1,6 +1,17 @@
 import { css } from '@emotion/react';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { ContactInformation } from '../Layout';
 import ChatHistory from './ChatHistory';
 import MessagingInterface from './MessagingInterface';
+import jwt_decode from 'jwt-decode';
+import { JwtPayload } from '../../../pages/api/contacts';
+
+export type ChatHistoryElement = {
+  created_at: string;
+  email: string;
+  message: string;
+}
 
 const chatStyles = css`
   width: 100%;
@@ -15,11 +26,46 @@ const chatStyles = css`
   }
 `;
 
-export default function Chat() {
+export default function Chat(props: {selectedContact: ContactInformation}) {
+  const [chatHistory, setChatHistory] = useState([] as Array<ChatHistoryElement>);
+  const [localAvatarURL, setLocalAvatarURL] = useState('/images/default-profile-image.png');
+  const [contactAvatarURL, setContactAvatarURL] = useState('/images/default-profile-image.png');
+  const [messagingInterfaceHeight, setMessagingInterfaceHeight] = useState(60);
+
+  useEffect(() => {
+    props.selectedContact && fetch(`/api/settings?user=${(jwt_decode(Cookies.get('JSON_WEB_TOKEN') as string) as JwtPayload).user}`, {
+      method: 'GET'
+    }).then((response)=>{
+       response.json().then(({avatar_url})=>{
+          setLocalAvatarURL(avatar_url);
+      });
+    });
+  }, [])
+
+  useEffect(()=>{
+    // only fetches on 200 OK
+    props.selectedContact && fetch(`/api/messages?contact=${props.selectedContact.email}`, {
+      method: 'GET'
+    }).then((response)=>{
+       response.json().then((data)=>{
+          setChatHistory(data);
+      });
+    });
+    
+    props.selectedContact && fetch(`/api/settings?user=${props.selectedContact.email}`, {
+      method: 'GET'
+    }).then((response)=>{
+       response.json().then(({avatar_url})=>{
+          setContactAvatarURL(avatar_url);
+      });
+    });
+    
+  },[props.selectedContact])
+
   return (
     <div css={chatStyles}>
-      <ChatHistory />
-      <MessagingInterface />
+      <MessagingInterface setMessagingInterfaceHeight={setMessagingInterfaceHeight}/>
+      <ChatHistory selectedContact={props.selectedContact} chatHistory={chatHistory} localAvatarURL={localAvatarURL} contactAvatarURL={contactAvatarURL} messagingInterfaceHeight={messagingInterfaceHeight}/>
     </div>
   );
 }
