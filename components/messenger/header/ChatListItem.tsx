@@ -5,11 +5,16 @@ import {
   ListItemAvatar,
   ListItemText,
 } from '@material-ui/core';
-import { ChatListItemData } from '../../../utilities/database';
+
+type ChatListItemData = {
+  id: string;
+  avatar: string;
+  name: string;
+  lastMessage: string;
+  selected: boolean;
+};
 
 const chatListItemStyles = css`
-  cursor: pointer;
-
   :hover {
     background-color: gainsboro;
   }
@@ -17,11 +22,11 @@ const chatListItemStyles = css`
 
 export default function ChatListItem(props: ChatListItemData) {
   return (
-    <ListItem css={chatListItemStyles}>
+    <ListItem css={chatListItemStyles} selected={props.selected}>
       <ListItemAvatar>
         <Avatar alt="profile picture" src={props.avatar} />
       </ListItemAvatar>
-      <ListItemText primary={props.name} secondary={props.lastMessage} />
+      <ListItemText primary={props.name} secondary={props.lastMessage.length > 70 ? props.lastMessage.slice(0, 70)+'...' : props.lastMessage} />
     </ListItem>
   );
 }

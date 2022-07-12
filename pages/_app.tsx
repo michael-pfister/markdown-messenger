@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <NextSeo
-        title="TinCan"
+        title="markdown messenger"
         description="online messenger"
         canonical="https://www.tincan.com/"
       />

@@ -1,9 +1,11 @@
 import { css } from '@emotion/react';
-import { List } from '@material-ui/core';
+import { Grid, List } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
-import { ListItemButton } from '@mui/material';
-import { useState } from 'react';
+import { Alert, AlertTitle, ListItemButton } from '@mui/material';
+import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
+import { useEffect, useState } from 'react';
 import { ChatList as DatabaseChatList } from '../../../utilities/database';
+import { ContactInformation } from '../Layout';
 import ChatListItem from './ChatListItem';
 
 const chatListStyles = css`
@@ -15,37 +17,64 @@ const chatListStyles = css`
   }
 `;
 
-const chatListItemStyles = css`
+const chatListButtonStyles = css`
+  cursor: pointer;
   padding: 0;
 `;
 
 export default function ChatList(props: {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  selectedIndex: number;
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  contacts: Array<ContactInformation>;
+  setContacts: React.Dispatch<React.SetStateAction<Array<ContactInformation>>>;
 }) {
-  const [selectedIndex, setSelectedIndex] = useState('0');
+  const [alert, setAlert] = useState({} as {[key: string]: any;});
+
+  useEffect(()=>{
+    fetch('/api/contacts', {
+      method: 'GET'
+    }).then((response)=>{
+       response.json().then((data)=>{
+        if(response.status === 200){
+          props.setContacts(data);
+        }else{
+          setAlert({message: data, severity: 'error'});
+        }
+      });
+      });
+  },[])
+
   return (
     <List css={chatListStyles}>
-      {DatabaseChatList.filter(({ name }) => {
+      {Object.keys(alert).length ? <Grid item xs={12}>
+            <Alert severity={alert.severity}>
+                      <AlertTitle>{alert.severity}</AlertTitle>
+                      {alert.message}
+                  </Alert>
+            </Grid> : null}
+      {props.contacts.filter(({ settings }) => {
         return props.search === ''
           ? true
-          : name.toLowerCase().includes(props.search.toLowerCase());
-      }).map((chatListItem) => {
+          : settings.name.toLowerCase().includes(props.search.toLowerCase());
+      }).map((contact, index) => {
         return (
           <ListItemButton
-            key={`ChatListItem_${chatListItem.id}`}
-            css={chatListItemStyles}
-            selected={selectedIndex === chatListItem.id}
+            key={`ChatListItem_${index}`}
+            css={chatListButtonStyles}
+            selected={props.selectedIndex === index}
             onClick={() => {
-              setSelectedIndex(chatListItem.id);
+              props.setSelectedIndex(index);
               props.setSearch('');
             }}
           >
             <ChatListItem
-              id={chatListItem.id}
-              avatar={chatListItem.avatar}
-              name={chatListItem.name}
-              lastMessage={chatListItem.lastMessage}
+              id={String(index)}
+              avatar={contact.settings.avatarURL}
+              name={contact.settings.name}
+              lastMessage={contact.latestMessage}
+              selected={props.selectedIndex === index}
             />
           </ListItemButton>
         );
