@@ -19,14 +19,16 @@ status BOOLEAN
 WITH comment = 'Q2. Find user settings';
 
 -- Create table for user contacts
-CREATE TABLE IF NOT EXISTS markdown_messenger.contact_by_user (
-email TEXT PRIMARY KEY,
-contact TEXT -- email of different user
+CREATE TABLE IF NOT EXISTS markdown_messenger.contacts_by_user (
+email TEXT,
+contact TEXT, -- email of different user
+PRIMARY KEY((email), contact)
 )
-WITH comment = 'Q3. Find user contacts';
+WITH comment = 'Q3. Find user contacts'
+AND CLUSTERING ORDER BY (contact ASC);
 
 -- Create table for user messages
-CREATE TABLE IF NOT EXISTS markdown_messenger.message_by_user (
+CREATE TABLE IF NOT EXISTS markdown_messenger.messages_by_user (
 email TEXT,
 target TEXT, -- email of target user
 message TEXT,
@@ -42,7 +44,7 @@ AND CLUSTERING ORDER BY (target ASC, created_at DESC);
 -- DEBUG QUERIES
 SELECT * FROM markdown_messenger.credentials_by_user;
 SELECT * FROM markdown_messenger.settings_by_user;
-SELECT * FROM markdown_messenger.contact_by_user;
+SELECT * FROM markdown_messenger.contacts_by_user;
 SELECT * FROM markdown_messenger.message_by_user;
 
 -- Insert some data
