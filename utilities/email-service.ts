@@ -6,7 +6,7 @@ const sendMail = async (targetEmailAddress:string, targetUserName: string, verif
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: `markdown.messenger@gmail.com`,
+      user: process.env.GMAILADDRESS,
       pass: process.env.GMAILAPPPASSWORD,
     },
     tls: {
