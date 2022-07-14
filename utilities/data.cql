@@ -28,7 +28,7 @@ WITH comment = 'Q3. Find user contacts'
 AND CLUSTERING ORDER BY (contact ASC);
 
 -- Create table for user messages
-CREATE TABLE IF NOT EXISTS markdown_messenger.messages_by_user ( --!!!!!! Change message_by_usser to messages_by_user in API
+CREATE TABLE IF NOT EXISTS markdown_messenger.message_by_user ( --!!!!!! Change message_by_usser to messages_by_user in API
 email TEXT,
 target TEXT, -- email of target user
 message TEXT,
@@ -45,7 +45,7 @@ AND CLUSTERING ORDER BY (target ASC, created_at DESC);
 SELECT * FROM markdown_messenger.credentials_by_user;
 SELECT * FROM markdown_messenger.settings_by_user;
 SELECT * FROM markdown_messenger.contacts_by_user;
-SELECT * FROM markdown_messenger.messages_by_user;
+SELECT * FROM markdown_messenger.message_by_user;
 
 -- Insert some data
 
@@ -53,7 +53,7 @@ INSERT INTO markdown_messenger.credentials_by_user
 (email, password_hash)
 VALUES ('melon.musk@gmail.com', '6bY_:td823bUZD7');
 
-INSERT INTO markdown_messenger.contact_by_user
+INSERT INTO markdown_messenger.contacts_by_user
 (email, contact)
 VALUES ('melon.musk@gmail.com', 'R2D2@gmail.com');
 

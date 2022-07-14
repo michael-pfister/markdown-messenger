@@ -26,7 +26,7 @@ const styles = {
   `,
 };
 
-interface fromTarget {
+export interface fromTarget {
   [key: string]: any;
 }
 
@@ -84,7 +84,7 @@ const SignIn = () => {
             name="password"
             label="Password"
             fullWidth
-            autoComplete="new-password"
+            autoComplete="password"
             required
           />
         </Grid>

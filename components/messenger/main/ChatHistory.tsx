@@ -9,11 +9,11 @@ import { ContactInformation } from '../Layout';
 import { ChatHistoryElement } from './Chat';
 
 const chatHistoryStyles = css`
-  height: calc(100vh - 0);
+  height: 57.8vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
-  }
+}
 `;
 
 export default function ChatHistory(props: {
@@ -30,17 +30,11 @@ export default function ChatHistory(props: {
     if (chatHistory) {
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }
-  }, []);
+  }, [props.chatHistory]);
 
   return (
-    <div css={css`
-    height: calc(100vh - ${props.messagingInterfaceHeight}px);
-    overflow-y: scroll;
-    ::-webkit-scrollbar {
-      width: 0px;
-    }
-  `} id={`chat-history`}>
-      {props.chatHistory && props.chatHistory.map((chatHistoryElement) => {
+    <div css={chatHistoryStyles} id={`chat-history`}>
+      {props.chatHistory instanceof Array && props.chatHistory.map((chatHistoryElement) => {
         return (
           <div
             key={`ChatHistory_message_${chatHistoryElement.email}_${chatHistoryElement.created_at}`}
@@ -69,7 +63,8 @@ export default function ChatHistory(props: {
             <Card
               css={css`
                 color: white;
-                max-width: 50%;
+                max-width: 50vw;
+
                 ${chatHistoryElement.email !== props.selectedContact.email
                   ? `background-color: DodgerBlue;`
                   : `background-color: DimGray;`}

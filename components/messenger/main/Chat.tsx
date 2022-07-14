@@ -16,15 +16,25 @@ export type ChatHistoryElement = {
 const chatStyles = css`
   width: 100%;
   height: 100vh;
-  background-image: url('https://c.pxhere.com/images/eb/0b/6c5f4bb5f46423d124737477c467-1594712.jpg!d');
+  //background-color: #1c1c1c;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-content: space-between;
+
+  background-image: url('/images/minimal-chat-wallpaper.jpg');
+  background-size: auto;
+  background-position: center;
+  background-position-y: -80vh;
+  background-repeat: no-repeat;
 
   & > * {
     width: 100%;
   }
 `;
+
+
+let myInterval: NodeJS.Timer;
+let previousData: Array<ChatHistoryElement> = [];
 
 export default function Chat(props: {selectedContact: ContactInformation}) {
   const [chatHistory, setChatHistory] = useState([] as Array<ChatHistoryElement>);
@@ -43,12 +53,15 @@ export default function Chat(props: {selectedContact: ContactInformation}) {
   }, [])
 
   useEffect(()=>{
+    window.clearInterval(myInterval);
+
     // only fetches on 200 OK
     props.selectedContact && fetch(`/api/messages?contact=${props.selectedContact.email}`, {
       method: 'GET'
     }).then((response)=>{
        response.json().then((data)=>{
           setChatHistory(data);
+          previousData = data;
       });
     });
     
@@ -59,13 +72,26 @@ export default function Chat(props: {selectedContact: ContactInformation}) {
           setContactAvatarURL(avatar_url);
       });
     });
+
+    myInterval = setInterval(() => {
+      props.selectedContact && fetch(`/api/messages?contact=${props.selectedContact.email}`, {
+        method: 'GET'
+      }).then((response)=>{
+         response.json().then((data)=>{
+            if(previousData.length !== data.length){
+              setChatHistory(data);
+              previousData = data;
+            }
+        });
+      });
+    }, 1000);
     
   },[props.selectedContact])
 
   return (
     <div css={chatStyles}>
-      <MessagingInterface setMessagingInterfaceHeight={setMessagingInterfaceHeight}/>
       <ChatHistory selectedContact={props.selectedContact} chatHistory={chatHistory} localAvatarURL={localAvatarURL} contactAvatarURL={contactAvatarURL} messagingInterfaceHeight={messagingInterfaceHeight}/>
+      <MessagingInterface selectedContact={props.selectedContact} setMessagingInterfaceHeight={setMessagingInterfaceHeight}/>
     </div>
   );
 }

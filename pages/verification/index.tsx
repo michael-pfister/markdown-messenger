@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import { InferGetServerSidePropsType } from 'next';
 import { useEffect, useState } from "react";
-import { CircularProgress, LinearProgress, Paper } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import Cookies from "js-cookie";
 import { Alert, AlertTitle } from "@mui/material";
 import { style } from "@mui/system";
@@ -85,7 +85,7 @@ const getServerSideProps = async (context: GetServerSidePropsContext) => {
     return {
       props: {verificationCode: context.query.code ? context.query.code : null},
     }
-  }
+}
 
 export default Verification;
 export { getServerSideProps };

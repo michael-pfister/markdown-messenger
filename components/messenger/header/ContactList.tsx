@@ -43,7 +43,7 @@ export default function ContactList(props: {
           setAlert({message: data, severity: 'error'});
         }
       });
-      });
+    });
   },[]);
 
   return (

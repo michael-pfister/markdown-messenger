@@ -3,6 +3,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { ChatList as DatabaseChatList } from '../../utilities/database';
 import ContactList from './header/ContactList';
+import LinkActionInterface from './header/LinkActionInterface';
 import Chat from './main/Chat';
 
 export type ContactInformation = {
@@ -53,6 +54,7 @@ export default function Layout() {
           }}
         />
         <ContactList search={search} setSearch={setSearch} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} contacts={contacts} setContacts={setContacts}/>
+        <LinkActionInterface />
       </header>
       <main>
         <Chat selectedContact={contacts[selectedIndex]}/>

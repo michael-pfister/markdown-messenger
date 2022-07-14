@@ -3,6 +3,7 @@ import cassandra from 'cassandra-driver';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import { EnviromentVariables, JwtPayload } from './contacts';
+import { request } from 'http';
 
 type Data = {};
 
@@ -39,6 +40,24 @@ export default async function handler(
                 
                 break;
             
+            case 'POST':
+                if((await cassandraClient.execute(`SELECT * FROM markdown_messenger.contacts_by_user WHERE email='${jwtPayload.user}' AND contact='${req.body.target}';`)).rowLength){
+                    if (req.body.message !== '<!--write your message here-->\n' && req.body.message){
+                        await cassandraClient.execute(`INSERT INTO markdown_messenger.message_by_user
+                        (email, target, created_at, message)
+                        VALUES
+                        ('${jwtPayload.user}', '${req.body.target}', toTimeStamp(now()), '${req.body.message.replaceAll("'", "''")}');`)
+
+                        res.status(200).json('Your message was sent successfully!');
+                    }else{
+                        throw new Error('no message specified');
+                    }
+                }else{
+                    throw new Error(`target user not in contacts`);
+                }
+
+                break;
+            
             default:
                 res.status(405).json(`Method ${req.method} Not Allowed`);
         }
@@ -51,6 +70,14 @@ export default async function handler(
 
             case 'jwt must be provided':
                 res.status(400).json(`Oops! Looks like you don't have a token. Please Log in.`);
+                break;
+
+            case 'target user not in contacts':
+                res.status(400).json(`Oops! Looks like you don't have ${req.body.target} in your contacts. You can try adding them through an invitation link.`);
+                break;
+
+            case 'no message specified':
+                res.status(400).json(`Oops! Looks like you didn't specify a message to be sent.`);
                 break;
 
             default:

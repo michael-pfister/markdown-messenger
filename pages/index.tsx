@@ -2,5 +2,5 @@ import { AppProps } from 'next/app';
 import Layout from '../components/landingPage/Layout';
 
 export default function LandingPage() {
-  return <Layout />;
+  return <div>landing page</div>;
 }

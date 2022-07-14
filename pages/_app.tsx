@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         canonical="https://www.tincan.com/"
       />
       <Head>
-        <link rel="icon" href="/images/logo.svg" />
+        <link rel="icon" href="/images/logo.png" />
       </Head>
       <Component {...pageProps} />
     </>

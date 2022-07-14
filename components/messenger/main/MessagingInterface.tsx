@@ -1,46 +1,36 @@
 import { css } from '@emotion/react';
-import { Box, Card, CardContent, Grid } from '@material-ui/core';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import GifIcon from '@mui/icons-material/Gif';
+import { Grid } from '@material-ui/core';
 import SendIcon from '@mui/icons-material/Send';
 import { IconButton, TextField } from '@mui/material';
 import { useState } from 'react';
+import Editor from "@monaco-editor/react";
 import MuiMarkdown from 'mui-markdown';
+import { ContactInformation } from '../Layout';
 
 const styles = {
   root: css`
     background-color: ghostwhite;
+    padding: 10px;
   `,
 
   preview: css`
     padding: 10px;
-    width: 100%;
+    max-height: 40vh;
+    width: 1px; // ? solves overflow issue 
+    overflow: hidden;
+    background-color: dodgerblue;
+    color: white;
   `,
 
   messagingControls: css`
-    padding: 10px;
     display: flex;
-    justify-content: space-evenly;
-  `,
-
-  textfield: css`
-    width: 100%;
+    justify-content: center;
+    align-content: center;
   `
 }
 
-const messagingInterfaceStyles = css`
-  padding: 10px;
-  background-color: ghostwhite;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
-const textFieldStyles = css`
-  width: 90%;
-`;
-
 export default function MessagingInterface(props: {
+  selectedContact: ContactInformation;
   setMessagingInterfaceHeight: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [preview, setPreview] = useState('');
@@ -48,30 +38,40 @@ export default function MessagingInterface(props: {
   return (
     <div css={styles.root} id='messaging-interface'>
       <Grid container>
-        <Grid item xs={12} css={styles.messagingControls}>
-          <TextField
-            css={styles.textfield}
-            size="small"
-            label="type message here ..."
-            onChange={(event)=>{
-              setPreview(event.target.value);
-              props.setMessagingInterfaceHeight(document.getElementById('messaging-interface')?.offsetHeight as number);
-              console.log(document.getElementById('messaging-interface')?.offsetHeight as number);
+        <Grid item xs={6}>
+          <Editor
+            defaultLanguage="html"
+            height='40vh'
+            defaultValue={`<!--write your message here-->\n`}
+            onChange={(value)=>{
+              setPreview(value as string);
             }}
-            multiline
           />
-          <IconButton color="primary" aria-label="send message" component="span">
+        </Grid>
+        <Grid item xs={5} css={styles.preview}>
+          <MuiMarkdown>{preview}</MuiMarkdown>
+        </Grid>
+        <Grid item xs={1} css={styles.messagingControls}>
+          <IconButton color="primary" aria-label="send message" component="span" onClick={()=>{
+            fetch('/api/messages', {
+              method: 'POST', 
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                target: props.selectedContact.email,
+                message: preview
+              })})
+              .then((response)=>{
+                if (response.status !== 200){
+                  response.json().then((data)=>{
+                    console.log(data);
+                  });
+                }});
+          }}>
             <SendIcon />
           </IconButton>
-        </Grid>
-        <Grid item xs={8} css={styles.preview}>
-          {/* <Card>
-            <CardContent> */}
-              <p>Preview</p>
-              <MuiMarkdown>{preview}</MuiMarkdown>
-            {/* </CardContent>
-          </Card> */}
-        </Grid>
+        </Grid>  
       </Grid>
     </div>
   );

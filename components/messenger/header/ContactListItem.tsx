@@ -21,12 +21,13 @@ const chatListItemStyles = css`
 `;
 
 export default function ContactListItem(props: ChatListItemData) {
+
   return (
     <ListItem css={chatListItemStyles} selected={props.selected}>
       <ListItemAvatar>
         <Avatar alt="profile picture" src={props.avatar} />
       </ListItemAvatar>
-      <ListItemText primary={props.name} secondary={props.lastMessage.length > 70 ? props.lastMessage.slice(0, 70)+'...' : props.lastMessage} />
+      <ListItemText primary={props.name} secondary={props.lastMessage.length > 16 ? props.lastMessage.slice(0, 16)+'...' : props.lastMessage} />
     </ListItem>
   );
 }
