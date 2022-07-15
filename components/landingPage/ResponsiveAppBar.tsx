@@ -33,16 +33,16 @@ const styles = {
         display: flex;
         gap: 4em;
 
-        a{
-        text-decoration: none;
-        font-weight: lighter;
-        color: black;
-        }
-
         h3{
-        font-weight: lighter;
-        cursor: pointer;
+            font-weight: lighter;
+            cursor: pointer;
         }
+    `,
+
+    link: css`
+            text-decoration: none;
+            font-weight: lighter;
+            color: black;
     `,
 
     mobile: {
@@ -98,6 +98,7 @@ const styles = {
 
 type MenuItem = {
     title: string;
+    target: string;
     link: string;
 }
 
@@ -109,12 +110,15 @@ const ResponsiveAppBar = ({menuItems}: {menuItems: Array<MenuItem>}) => {
     const MobileList = () => {
         return <List css={styles.mobile.list}>
           {menuItems.map((menuItem, index)=>{
+            console.log(menuItem.link);
             return <ListItem key={`mobile_menu_item_${index}`} disablePadding>
-              <Link href={menuItem.link}>
-                <ListItemButton>
-                  <ListItemText primary={menuItem.title}/>
-                </ListItemButton>
-              </Link>
+                <Link href={menuItem.link} passHref>
+                    <a title={menuItem.title} target={menuItem.target} rel="noreferrer" css={styles.link}>
+                        <ListItemButton>
+                        <ListItemText primary={menuItem.title}/>
+                        </ListItemButton>
+                    </a>
+                </Link>
             </ListItem>;
           })}
         </List>;
@@ -136,8 +140,10 @@ const ResponsiveAppBar = ({menuItems}: {menuItems: Array<MenuItem>}) => {
         </h3>
         {mobile ? <nav css={styles.navigation}>
         {menuItems.map((menuItem, index)=>{
-            return <Link href={menuItem.link} key={`menu_item_${index}`}>
-            <h3>{menuItem.title}</h3>
+            return <Link href={menuItem.link} key={`menu_item_${index}`} passHref>
+                <a title={menuItem.title} target={menuItem.target} rel="noreferrer" css={styles.link}>
+                    <h3>{menuItem.title}</h3>
+                </a>
             </Link>
         })}
         </nav> : <div>

@@ -6,19 +6,23 @@ import ResponsiveAppBar from '../components/landingPage/ResponsiveAppBar';
 const menuItems = [
   {
       title: 'Messenger App',
+      target: '_self',
       link: '/messenger'
   },
   {
       title: 'Login',
+      target: '_blank',
       link: '/login'
   },
   {
       title: 'Sign Up',
+      target: '_blank',
       link: '/register'
   },
   {
       title: 'GitHub',
-      link: 'https://github.com/stracciatella27/markdown-messenger'
+      target: '_blank',
+      link: 'https://github.com/stracciatella27/markdown-messenger#readme'
   }
 ]
 
