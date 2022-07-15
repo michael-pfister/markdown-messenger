@@ -49,7 +49,7 @@ const styles = {
     align-items: center;
 
     h1{
-      width: 50vw;
+      max-width: 500px;
     }
 
     div{
@@ -58,9 +58,10 @@ const styles = {
   `,
 
   poweredBySection: css`
-    margin: 4em 0;
+    margin-bottom: 6em;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     
     h1{
       width: 100%;
@@ -95,7 +96,7 @@ const LandingPage = () => {
       <section css={css`${styles.titleSection} height: ${titleSectionHeight}px;`}>
         <h1>The Worlds Most Highly Customizable Online Messenger.</h1>
         <div>
-          <Image src="/images/landingPageLaptop.webp" width="500px" height={`${1440/2560*500}px`} alt="Minimalist art of laptop with Visual Studio Code"/>
+          <Image src="/images/landingPageLaptop.webp" width="500px" height={`${706/1257*500}px`} alt="Minimalist art of laptop with Visual Studio Code" />
         </div>
       </section>
       <section css={styles.poweredBySection}>

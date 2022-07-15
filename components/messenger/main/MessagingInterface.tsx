@@ -53,7 +53,7 @@ export default function MessagingInterface(props: {
         </Grid>
         <Grid item xs={1} css={styles.messagingControls}>
           <IconButton color="primary" aria-label="send message" component="span" onClick={()=>{
-            fetch('/api/messages', {
+            props.selectedContact && fetch('/api/messages', {
               method: 'POST', 
               headers: {
                 'Content-Type': 'application/json'

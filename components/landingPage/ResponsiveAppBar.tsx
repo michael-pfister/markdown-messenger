@@ -17,6 +17,16 @@ const styles = {
         display: flex;
         gap: 0.5em;
         font-weight: lighter;
+        align-items: center;
+
+        .icon{
+            width: 20px;
+            height: 20px;
+            background-image: url('/images/logo.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+        }
     `,
 
     navigation: css`
@@ -121,7 +131,7 @@ const ResponsiveAppBar = ({menuItems}: {menuItems: Array<MenuItem>}) => {
 
     return <div css={styles.root}>
         <h3 css={styles.heading}>
-            <Image src="/images/logo.svg" alt="logo" width="20px" height="20px"/>
+            <span className="icon" />
             Markdown Messenger
         </h3>
         {mobile ? <nav css={styles.navigation}>

@@ -24,7 +24,7 @@ export default async function handler(
                 `);
 
                 if (databaseResultSet.rowLength){
-                    await bcrypt.compare(req.body.password, databaseResultSet.rows[0].password_hash) ? res.status(200).json(jwt.sign({ user: req.body.email }, process.env.JWTSECRET, { expiresIn: '15m' })) : res.status(400).json('Email or Password Invalid');
+                    await bcrypt.compare(req.body.password, databaseResultSet.rows[0].password_hash) ? res.status(200).json(jwt.sign({ user: req.body.email }, process.env.JWTSECRET, { expiresIn: '1h' })) : res.status(400).json('Email or Password Invalid');
                 }else{
                     res.status(400).json('Email or Password Invalid');
                 }

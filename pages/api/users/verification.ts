@@ -39,7 +39,7 @@ const addUser = async (email: string, passwordHash: string, userName: string, re
         ]
             )
         .then(()=>{
-            res.status(200).json(jwt.sign({ user: email }, (process.env as EnviromentVariables).JWTSECRET, { expiresIn: '15m' }));
+            res.status(200).json(jwt.sign({ user: email }, (process.env as EnviromentVariables).JWTSECRET, { expiresIn: '1h' }));
         })
         .catch((error)=>{ throw error;});
 }

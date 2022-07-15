@@ -24,8 +24,9 @@ const chatStyles = css`
   background-image: url('/images/minimal-chat-wallpaper.jpg');
   background-size: auto;
   background-position: center;
-  background-position-y: -80vh;
+  //background-position-y: -80vh;
   background-repeat: no-repeat;
+  background-color: #191c21;
 
   & > * {
     width: 100%;
