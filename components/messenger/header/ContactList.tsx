@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Grid, List } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
-import { Alert, AlertTitle, ListItemButton } from '@mui/material';
+import { Alert, AlertColor, AlertTitle, ListItemButton } from '@mui/material';
 import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 import { useEffect, useState } from 'react';
 import { ContactInformation } from '../Layout';
@@ -27,31 +27,20 @@ export default function ContactList(props: {
   selectedIndex: number;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
   contacts: Array<ContactInformation>;
-  setContacts: React.Dispatch<React.SetStateAction<Array<ContactInformation>>>;
+  alert: {
+    severity: AlertColor;
+    message: string;
+  };
+  setMobileContactSelected?: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [alert, setAlert] = useState({} as {[key: string]: any;});
-
-  useEffect(()=>{
-    fetch('/api/contacts', {
-      method: 'GET'
-    }).then((response)=>{
-       response.json().then((data)=>{
-        if(response.status === 200){
-          props.setContacts(data);
-        }else{
-          setAlert({message: data, severity: 'error'});
-        }
-      });
-    });
-  },[]);
 
   return (
     <List css={chatListStyles}>
       {Object.keys(alert).length ? <Grid item xs={12}>
-            <Alert severity={alert.severity}>
-                      <AlertTitle>{alert.severity}</AlertTitle>
-                      {alert.message}
-                  </Alert>
+            <Alert severity={props.alert.severity}>
+                <AlertTitle>{props.alert.severity}</AlertTitle>
+                {props.alert.message}
+              </Alert>
             </Grid> : null}
       {props.contacts.filter(({ settings }) => {
         return props.search === ''
@@ -66,6 +55,8 @@ export default function ContactList(props: {
             onClick={() => {
               props.setSelectedIndex(props.contacts.indexOf(contact));
               props.setSearch('');
+
+              props.setMobileContactSelected && props.setMobileContactSelected(true);
             }}
           >
             <ContactListItem

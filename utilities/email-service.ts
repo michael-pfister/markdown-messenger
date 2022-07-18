@@ -55,7 +55,7 @@ const sendMail = async (targetEmailAddress:string, targetUserName: string, verif
                 <h1>📨</h1>
                 <span>Hi ${targetUserName}!</span>
                 <h1>Please verify your Email Address.</h1>
-                <a href="http://localhost:3000/verification?code=${verificationCode}" aria-label="verify your email account">
+                <a href="https://markdown-messenger.herokuapp.com/verification?code=${verificationCode}" aria-label="verify your email account">
                     <button>
                         authorize
                     </button>
