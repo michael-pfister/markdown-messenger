@@ -8,7 +8,6 @@ import { ContactInformation } from '../Layout';
 import { ChatHistoryElement } from './Chat';
 
 const chatHistoryStyles = css`
-  height: 57.8vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
@@ -22,7 +21,18 @@ export default function ChatHistory(props: {
   contactAvatarURL: string,
   messagingInterfaceHeight: number
 }) {
+  const [height, setHeight] = useState(0);
   
+  useEffect(()=>{
+    const messagingInterfaceObserver = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        setHeight(window.innerHeight - entry.contentRect.height - 33);
+      });
+    });
+
+    messagingInterfaceObserver.observe(document.getElementById('messaging-interface') as HTMLElement);
+  }, []);
+
   // 💀
   useEffect(() => {
     const chatHistory = document.getElementById('chat-history');
@@ -32,7 +42,7 @@ export default function ChatHistory(props: {
   }, [props.chatHistory]);
 
   return (
-    <div css={chatHistoryStyles} id={`chat-history`}>
+    <div css={css`${chatHistoryStyles} height: ${height}px;`} id={`chat-history`}>
       {props.chatHistory instanceof Array && props.chatHistory.map((chatHistoryElement) => {
         return (
           <div
@@ -62,15 +72,17 @@ export default function ChatHistory(props: {
             <Card
               css={css`
                 color: white;
-                max-width: 50vw;
+                overflow: auto;
 
                 ${chatHistoryElement.email !== props.selectedContact.email
                   ? `background-color: DodgerBlue;`
-                  : `background-color: DimGray;`}
+                  : `background-color: #454545;`}
               `}
             >
               <CardContent>
                 <MuiMarkdown>{chatHistoryElement.message}</MuiMarkdown>
+                <br/><br/>
+                {new Date(chatHistoryElement.created_at).toDateString()}
               </CardContent>
             </Card>
           </div>

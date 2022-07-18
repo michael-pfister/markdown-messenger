@@ -1,57 +1,59 @@
 import { css } from '@emotion/react';
-import { Grid } from '@material-ui/core';
 import SendIcon from '@mui/icons-material/Send';
 import { IconButton } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Editor from "@monaco-editor/react";
-import MuiMarkdown from 'mui-markdown';
 import { ContactInformation } from '../Layout';
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 const styles = {
   root: css`
-    background-color: ghostwhite;
-    padding: 10px;
+    border-top: 1px solid black;
+    padding: 1em;
   `,
 
   preview: css`
-    padding: 10px;
     max-height: 40vh;
-    width: 1px; // ? solves overflow issue 
-    overflow: hidden;
+    overflow: auto;
+    padding: 1em;
     background-color: dodgerblue;
     color: white;
+    border-radius: 4px;
+    margin-bottom: 1em;
   `,
 
   messagingControls: css`
     display: flex;
     justify-content: center;
     align-content: center;
+
+    .editor{
+      border: 1px solid black;
+    }
   `
 }
 
 export default function MessagingInterface(props: {
   selectedContact: ContactInformation;
-  setMessagingInterfaceHeight: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [preview, setPreview] = useState('');
 
   return (
-    <div css={styles.root} id='messaging-interface'>
-      <Grid container>
-        <Grid item xs={6}>
+    <div css={css`${styles.root}`} id='messaging-interface'>
+        {preview.length ? <div css={styles.preview}>
+          <ReactMarkdown rehypePlugins={[rehypeRaw]}>{preview}</ReactMarkdown>
+        </div> : null}
+        <div css={styles.messagingControls}>
           <Editor
             defaultLanguage="html"
-            height='40vh'
-            defaultValue={`<!--write your message here-->\n`}
+            height='10vh'
             onChange={(value)=>{
               setPreview(value as string);
             }}
+            className="editor"
           />
-        </Grid>
-        <Grid item xs={5} css={styles.preview}>
-          <MuiMarkdown>{preview}</MuiMarkdown>
-        </Grid>
-        <Grid item xs={1} css={styles.messagingControls}>
           <IconButton color="primary" aria-label="send message" component="span" onClick={()=>{
             props.selectedContact && fetch('/api/messages', {
               method: 'POST', 
@@ -72,8 +74,7 @@ export default function MessagingInterface(props: {
           }}>
             <SendIcon />
           </IconButton>
-        </Grid>  
-      </Grid>
+        </div>
     </div>
   );
 }

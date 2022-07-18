@@ -14,8 +14,6 @@ export type ChatHistoryElement = {
 }
 
 const chatStyles = css`
-  width: 100%;
-  height: 100vh;
   //background-color: #1c1c1c;
   display: flex;
   flex-wrap: wrap;
@@ -92,7 +90,6 @@ export default function Chat(props: {selectedContact: ContactInformation}) {
   return (
     <div css={chatStyles}>
       <ChatHistory selectedContact={props.selectedContact} chatHistory={chatHistory} localAvatarURL={localAvatarURL} contactAvatarURL={contactAvatarURL} messagingInterfaceHeight={messagingInterfaceHeight}/>
-      <MessagingInterface selectedContact={props.selectedContact} setMessagingInterfaceHeight={setMessagingInterfaceHeight}/>
     </div>
   );
 }

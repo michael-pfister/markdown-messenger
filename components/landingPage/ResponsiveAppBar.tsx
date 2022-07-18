@@ -159,3 +159,4 @@ const ResponsiveAppBar = ({menuItems}: {menuItems: Array<MenuItem>}) => {
 }
 
 export default ResponsiveAppBar;
+export {checkWindowSize}
