@@ -8,9 +8,13 @@ dotenv.config();
 var jwt = require('jsonwebtoken');
 
 const cassandraClient = new cassandra.Client({
-  contactPoints: ['127.0.0.1'],
-  localDataCenter: 'datacenter1',
-  keyspace: 'markdown_messenger',
+    cloud: {
+      secureConnectBundle: "utilities/secure-connect-markdown-messenger.zip",
+    },
+    credentials: {
+      username: process.env.DATASTAXCLIENTID as string,
+      password: process.env.DATASTAXCLIENTSECRET as string,
+    }
 });
 
 export default async function handler(
@@ -20,6 +24,8 @@ export default async function handler(
     switch(req.method){
         case 'POST':
             try{
+                await cassandraClient.connect();
+
                 if (validator.validate(req.body.email)){
                     if(!(await cassandraClient.execute(
                         `SELECT email FROM markdown_messenger.credentials_by_user WHERE email='${req.body.email}'`

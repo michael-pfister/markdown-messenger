@@ -44,7 +44,7 @@ export default function Chat(props: {selectedContact: ContactInformation}) {
   const [messagingInterfaceHeight, setMessagingInterfaceHeight] = useState(60);
 
   useEffect(() => {
-    props.selectedContact && fetch(`/api/settings?user=${(jwt_decode(Cookies.get('JSON_WEB_TOKEN') as string) as JwtPayload).user}`, {
+    fetch(`/api/settings?user=${(jwt_decode(Cookies.get('JSON_WEB_TOKEN') as string) as JwtPayload).user}`, {
       method: 'GET'
     }).then((response)=>{
        response.json().then(({avatar_url})=>{

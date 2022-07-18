@@ -3,6 +3,8 @@ import cassandra from 'cassandra-driver';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import { EnviromentVariables, JwtPayload } from './contacts';
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config();
 
 function isImage(url: string) {
     return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
@@ -11,9 +13,13 @@ function isImage(url: string) {
 type Data = {};
 
 const cassandraClient = new cassandra.Client({
-  contactPoints: ['127.0.0.1'],
-  localDataCenter: 'datacenter1',
-  keyspace: 'markdown_messenger',
+    cloud: {
+      secureConnectBundle: "utilities/secure-connect-markdown-messenger.zip",
+    },
+    credentials: {
+      username: process.env.DATASTAXCLIENTID as string,
+      password: process.env.DATASTAXCLIENTSECRET as string,
+    }
 });
 
 export default async function handler(
@@ -21,6 +27,7 @@ export default async function handler(
   res: NextApiResponse<Data>,
 ) {
     try{
+        await cassandraClient.connect();
         const jwtPayload = jwt.verify(req.cookies.JSON_WEB_TOKEN, (process.env as EnviromentVariables).JWTSECRET) as JwtPayload;
         
         switch(req.method){

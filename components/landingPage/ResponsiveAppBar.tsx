@@ -7,10 +7,11 @@ import Image from "next/image";
 
 const styles = {
     root: css`
-        margin: 0 2em;
+        padding: 0 2em;
         display: flex;
         align-items: center;
-        justify-content: space-between; 
+        justify-content: space-between;
+        background-color: white;
     `,
 
     heading: css`
@@ -22,7 +23,7 @@ const styles = {
         .icon{
             width: 20px;
             height: 20px;
-            background-image: url('/images/logo.png');
+            background-image: url('/images/logo.svg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: 20px;
@@ -110,12 +111,11 @@ const ResponsiveAppBar = ({menuItems}: {menuItems: Array<MenuItem>}) => {
     const MobileList = () => {
         return <List css={styles.mobile.list}>
           {menuItems.map((menuItem, index)=>{
-            console.log(menuItem.link);
             return <ListItem key={`mobile_menu_item_${index}`} disablePadding>
                 <Link href={menuItem.link} passHref>
                     <a title={menuItem.title} target={menuItem.target} rel="noreferrer" css={styles.link}>
                         <ListItemButton>
-                        <ListItemText primary={menuItem.title}/>
+                            <ListItemText primary={menuItem.title}/>
                         </ListItemButton>
                     </a>
                 </Link>

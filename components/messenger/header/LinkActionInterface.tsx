@@ -18,10 +18,10 @@ const styles = {
 
 const LinkActionInterface = () =>{
     return <div css={styles.root}>
-        <Link href="/invite">
+        <Link href="/invite" passHref>
             <a target="_blank"><PersonAddIcon /></a>
         </Link>
-        <Link href="/settings">
+        <Link href="/settings" passHref>
             <a target="_blank"><SettingsIcon /></a>
         </Link>
     </div>

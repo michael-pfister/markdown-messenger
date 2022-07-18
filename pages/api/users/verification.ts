@@ -6,9 +6,13 @@ import jwt from 'jsonwebtoken';
 dotenv.config();
 
 const cassandraClient = new cassandra.Client({
-  contactPoints: ['127.0.0.1'],
-  localDataCenter: 'datacenter1',
-  keyspace: 'markdown_messenger',
+    cloud: {
+      secureConnectBundle: "utilities/secure-connect-markdown-messenger.zip",
+    },
+    credentials: {
+      username: process.env.DATASTAXCLIENTID as string,
+      password: process.env.DATASTAXCLIENTSECRET as string,
+    }
 });
 
 interface EnviromentVariables {
@@ -51,6 +55,8 @@ export default async function handler(
     switch(req.method){
         case 'POST':
             try{
+                await cassandraClient.connect();
+                
                 // Check validity of JWT
                 const jwtPayload = jwt.verify(req.body.JWT, (process.env as EnviromentVariables).JWTSECRET) as JwtPayload;
                 
@@ -61,7 +67,6 @@ export default async function handler(
 
                 // Add the User to the Database and respond with a new session
                 await addUser(jwtPayload.email, jwtPayload.passwordHash, jwtPayload.userName, res);
-                
             }catch(error: any){
                 switch(error.message){
                     case 'jwt expired':

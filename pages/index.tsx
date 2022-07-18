@@ -46,18 +46,46 @@ const styles = {
   header: css`width: 100vw;`,
 
   titleSection: css`
+    margin-top: 1em;
+    width: 100vw;
     display: flex;
     gap: 2em;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-content: center;
 
     h1{
-      max-width: 500px;
+      margin: 0;
+      max-width: 800px;
+      font-size: 3em;
+      color: white;
+      display: flex;
+      align-items: center;
+
+      ::before{
+        position: absolute;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 300px;
+        background-color: #151515;
+        z-index: -1;
+        animation: flyIn 0.5s ease;
+
+        @keyframes flyIn {
+          from{
+            width: 0;
+          }
+          to{
+            width: 100%;
+          }
+        }
+      }
     }
 
-    div{
-      margin: 2em;
+    .imageContainer{
+      display: inherit;
+      box-shadow: 0px 0px 20px 5px black;
     }
   `,
 
@@ -72,7 +100,6 @@ const styles = {
     }
 
     div{
-      margin-top: 2em;
       display: inherit;
       flex-wrap: wrap;
       gap: 4em;
@@ -83,6 +110,7 @@ const styles = {
 }
 
 const logoHeight = 100;
+const titleImagewidth = 600;
 
 const LandingPage = () => {
   const [titleSectionHeight, setTitleSectionHeight] = useState(1000);
@@ -98,9 +126,11 @@ const LandingPage = () => {
     
     <main>
       <section css={css`${styles.titleSection} height: ${titleSectionHeight}px;`}>
-        <h1>The Worlds Most Highly Customizable Online Messenger.</h1>
-        <div>
-          <Image src="/images/landingPageLaptop.webp" width="500px" height={`${706/1257*500}px`} alt="Minimalist art of laptop with Visual Studio Code" />
+          <h1>
+            The Worlds Most Highly Customizable Online Messenger.
+          </h1>
+        <div className='imageContainer'>
+          <Image className='image' src="/images/landing-page-laptop.jpeg" width={`${titleImagewidth}`} height={`${779/938*titleImagewidth}px`} alt="Developer Laptop" priority/>
         </div>
       </section>
       <section css={styles.poweredBySection}>

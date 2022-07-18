@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Grid } from '@material-ui/core';
 import SendIcon from '@mui/icons-material/Send';
-import { IconButton, TextField } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { useState } from 'react';
 import Editor from "@monaco-editor/react";
 import MuiMarkdown from 'mui-markdown';
@@ -63,6 +63,7 @@ export default function MessagingInterface(props: {
                 message: preview
               })})
               .then((response)=>{
+                // finishn this
                 if (response.status !== 200){
                   response.json().then((data)=>{
                     console.log(data);

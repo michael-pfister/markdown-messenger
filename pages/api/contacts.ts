@@ -2,6 +2,8 @@ import cassandra from 'cassandra-driver';
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config();
 
 type Data = {};
 
@@ -22,9 +24,13 @@ type ContactInformation = {
 }
 
 const cassandraClient = new cassandra.Client({
-  contactPoints: ['127.0.0.1'],
-  localDataCenter: 'datacenter1',
-  keyspace: 'markdown_messenger',
+  cloud: {
+    secureConnectBundle: "utilities/secure-connect-markdown-messenger.zip",
+  },
+  credentials: {
+    username: process.env.DATASTAXCLIENTID as string,
+    password: process.env.DATASTAXCLIENTSECRET as string,
+  }
 });
 
 export default async function handler(
@@ -34,6 +40,7 @@ export default async function handler(
   switch(req.method){
     case 'GET':
       try{
+        await cassandraClient.connect();
         const jwtPayload = jwt.verify(req.cookies.JSON_WEB_TOKEN, (process.env as EnviromentVariables).JWTSECRET) as JwtPayload;
         let contacts: Array<ContactInformation> = [];
 

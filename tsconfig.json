@@ -16,6 +16,6 @@
     "jsx": "preserve",
     "jsxImportSource": "@emotion/react"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next.config.js", "utilities/email-service.mjs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next.config.js", "utilities/email-service.mjs", "utilities/test-database.mts"],
   "exclude": ["node_modules"]
 }

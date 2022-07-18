@@ -9,9 +9,13 @@ dotenv.config();
 var jwt = require('jsonwebtoken');
 
 const cassandraClient = new cassandra.Client({
-  contactPoints: ['127.0.0.1'],
-  localDataCenter: 'datacenter1',
-  keyspace: 'markdown_messenger',
+    cloud: {
+      secureConnectBundle: "utilities/secure-connect-markdown-messenger.zip",
+    },
+    credentials: {
+      username: process.env.DATASTAXCLIENTID as string,
+      password: process.env.DATASTAXCLIENTSECRET as string,
+    }
 });
 
 export default async function handler(
@@ -19,6 +23,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
     try{
+        await cassandraClient.connect();
         const jwtPayload = jwt.verify(req.cookies.JSON_WEB_TOKEN, (process.env as EnviromentVariables).JWTSECRET) as JwtPayload;
         
         if(req.query.user !== jwtPayload.user){
@@ -66,7 +71,6 @@ export default async function handler(
         }else{
             res.status(400).json(`You can't add yourself.`);
         }
-
     }catch(error: any){
         switch(error.message){
 

@@ -95,7 +95,7 @@ const SignIn = () => {
         </Grid>
         <Grid item xs={12}>
           <div css={styles.links}>
-            <Link href="/signup">Dont have an Account? Sign Up</Link>
+            <Link href="/register">Dont have an Account? Sign Up</Link>
           </div>
         </Grid>
       </Grid>
