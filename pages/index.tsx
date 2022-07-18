@@ -130,17 +130,16 @@ const LandingPage = () => {
             The Worlds Most Highly Customizable Online Messenger.
           </h1>
         <div className='imageContainer'>
-          <Image className='image' src="/images/landing-page-laptop.jpeg" width={`${titleImagewidth}`} height={`${779/938*titleImagewidth}px`} alt="Developer Laptop" priority/>
+          <Image className='image' src="/images/landing-page-laptop.jpeg" width={`${titleImagewidth}`} height={`${960/1200*titleImagewidth}px`} alt="Developer Laptop" priority/>
         </div>
       </section>
       <section css={styles.poweredBySection}>
         <h1>Powered By</h1>
         <div>
-          <Image src='/images/TechnologyIcons/nextjs-logo.png' alt='Next.js' width={`${1626/1347*logoHeight}px`} height={`${logoHeight}px`}/>
+          <Image src='/images/TechnologyIcons/nextjs-logo.png' alt='Next.js' width={`${800/479*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/react-logo.jpg' alt='React' width={`${960/540*logoHeight}px`} height={`${logoHeight}px`}/>
-          <Image src='/images/TechnologyIcons/cassandra-logo.png' alt='Cassandra' width={`${602/401*logoHeight}px`} height={`${logoHeight}px`}/>
+          <Image src='/images/TechnologyIcons/cassandra-logo.jpg' alt='Cassandra' width={`${500/306*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/typescript-logo.png' alt='TypeScript' width={`${740/405*logoHeight}px`} height={`${logoHeight}px`}/>
-          <Image src='/images/TechnologyIcons/docker-logo.png' alt='Docker' width={`${400/331*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/mui-logo.png' alt='Material UI' width={`${1400/787*logoHeight}px`} height={`${logoHeight}px`}/>
         </div>
       </section>
