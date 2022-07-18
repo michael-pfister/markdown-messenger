@@ -4,7 +4,6 @@ import { Search } from '@mui/icons-material';
 import { Alert, AlertTitle, ListItemButton } from '@mui/material';
 import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 import { useEffect, useState } from 'react';
-import { ChatList as DatabaseChatList } from '../../../utilities/database';
 import { ContactInformation } from '../Layout';
 import ContactListItem from './ContactListItem';
 

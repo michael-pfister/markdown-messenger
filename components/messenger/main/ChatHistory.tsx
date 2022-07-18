@@ -4,7 +4,6 @@ import { PeopleSharp } from '@mui/icons-material';
 import { Alert, AlertTitle, Avatar, Card, CardContent } from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
 import { useEffect, useState } from 'react';
-import { messageCluster } from '../../../utilities/database';
 import { ContactInformation } from '../Layout';
 import { ChatHistoryElement } from './Chat';
 

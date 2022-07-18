@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import { Autocomplete, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { ChatList as DatabaseChatList } from '../../utilities/database';
 import ContactList from './header/ContactList';
 import LinkActionInterface from './header/LinkActionInterface';
 import Chat from './main/Chat';
