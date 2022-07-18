@@ -36,7 +36,7 @@ export default function ContactList(props: {
 
   return (
     <List css={chatListStyles}>
-      {Object.keys(alert).length ? <Grid item xs={12}>
+      {Object.keys(props.alert).length ? <Grid item xs={12}>
             <Alert severity={props.alert.severity}>
                 <AlertTitle>{props.alert.severity}</AlertTitle>
                 {props.alert.message}

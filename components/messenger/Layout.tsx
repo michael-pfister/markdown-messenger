@@ -52,7 +52,7 @@ export default function Layout() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [contacts, setContacts] = useState([] as Array<ContactInformation>);
   const [mobile, setMobile] = useState(false);
-  const [mobileContactSelected, setMobileContactSelected] = useState(true);
+  const [mobileContactSelected, setMobileContactSelected] = useState(false);
   const [alert, setAlert] = useState({} as { severity: AlertColor; message: string});
   
   useEffect(()=>{
