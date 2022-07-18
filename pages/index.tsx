@@ -57,7 +57,6 @@ const styles = {
     h1{
       margin: 0;
       max-width: 800px;
-      font-size: 3em;
       color: white;
       display: flex;
       align-items: center;
@@ -136,7 +135,7 @@ const LandingPage = () => {
       <section css={styles.poweredBySection}>
         <h1>Powered By</h1>
         <div>
-          <Image src='/images/TechnologyIcons/nextjs-logo.png' alt='Next.js' width={`${800/479*logoHeight}px`} height={`${logoHeight}px`}/>
+          <Image src='/images/TechnologyIcons/nextjs-logo.png' alt='Next.js' width={`${1626/1347*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/react-logo.jpg' alt='React' width={`${960/540*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/cassandra-logo.jpg' alt='Cassandra' width={`${500/306*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/typescript-logo.png' alt='TypeScript' width={`${740/405*logoHeight}px`} height={`${logoHeight}px`}/>
