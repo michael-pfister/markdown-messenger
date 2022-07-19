@@ -14,22 +14,17 @@ const styles = {
   `,
 
   preview: css`
+    padding: 1em;
     max-height: 40vh;
     overflow: auto;
-    padding: 1em;
-    margin: 1em;
     background-color: dodgerblue;
     color: white;
-    border-radius: 4px;
   `,
 
   messagingControls: css`
     display: flex;
     justify-content: center;
     align-content: center;
-
-    .editor{
-    }
   `
 }
 
@@ -39,7 +34,7 @@ export default function MessagingInterface(props: {
   const [preview, setPreview] = useState('');
 
   return (
-    <div css={css`${styles.root}`} id='messaging-interface'>
+    <div css={styles.root} id='messaging-interface'>
         {preview.length ? <div css={styles.preview}>
           <ReactMarkdown rehypePlugins={[rehypeRaw]}>{preview}</ReactMarkdown>
         </div> : null}
@@ -51,7 +46,6 @@ export default function MessagingInterface(props: {
             onChange={(value)=>{
               setPreview(value as string);
             }}
-            className="editor"
           />
           <IconButton color="primary" aria-label="send message" component="span" onClick={()=>{
             props.selectedContact && fetch('/api/messages', {
