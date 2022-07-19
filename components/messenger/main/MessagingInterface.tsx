@@ -10,18 +10,17 @@ import rehypeRaw from 'rehype-raw';
 
 const styles = {
   root: css`
-    border-top: 1px solid black;
-    padding: 1em;
+    background-color: #1e1e1e;
   `,
 
   preview: css`
     max-height: 40vh;
     overflow: auto;
     padding: 1em;
+    margin: 1em;
     background-color: dodgerblue;
     color: white;
     border-radius: 4px;
-    margin-bottom: 1em;
   `,
 
   messagingControls: css`
@@ -30,7 +29,6 @@ const styles = {
     align-content: center;
 
     .editor{
-      border: 1px solid black;
     }
   `
 }
@@ -49,6 +47,7 @@ export default function MessagingInterface(props: {
           <Editor
             defaultLanguage="html"
             height='10vh'
+            theme='vs-dark'
             onChange={(value)=>{
               setPreview(value as string);
             }}

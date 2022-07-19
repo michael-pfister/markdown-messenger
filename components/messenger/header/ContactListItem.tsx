@@ -27,7 +27,7 @@ export default function ContactListItem(props: ChatListItemData) {
       <ListItemAvatar>
         <Avatar alt="profile picture" src={props.avatar} />
       </ListItemAvatar>
-      <ListItemText primary={props.name} secondary={props.lastMessage.length > 16 ? props.lastMessage.slice(0, 16)+'...' : props.lastMessage} />
+      <ListItemText primary={props.name} secondary={props.lastMessage.length > 32 ? props.lastMessage.slice(0, 32)+'...' : props.lastMessage} />
     </ListItem>
   );
 }

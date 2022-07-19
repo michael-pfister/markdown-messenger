@@ -1,17 +1,30 @@
 import { css } from '@emotion/react';
-import { Grid } from '@material-ui/core';
-import { PeopleSharp } from '@mui/icons-material';
-import { Alert, AlertTitle, Avatar, Card, CardContent } from '@mui/material';
-import MuiMarkdown from 'mui-markdown';
+import { Avatar, Card, CardContent } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ContactInformation } from '../Layout';
 import { ChatHistoryElement } from './Chat';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 const chatHistoryStyles = css`
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
 }
+`;
+
+const markdownStyles = css`
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    width: 100%;
+  }
+`;
+
+const dateStyles = css`
+  width: 100%;
+  font-size: 0.8em;
 `;
 
 export default function ChatHistory(props: {
@@ -26,7 +39,7 @@ export default function ChatHistory(props: {
   useEffect(()=>{
     const messagingInterfaceObserver = new ResizeObserver(entries => {
       entries.forEach(entry => {
-        setHeight(window.innerHeight - entry.contentRect.height - 33);
+        setHeight(window.innerHeight - entry.contentRect.height);
       });
     });
 
@@ -80,9 +93,8 @@ export default function ChatHistory(props: {
               `}
             >
               <CardContent>
-                <MuiMarkdown>{chatHistoryElement.message}</MuiMarkdown>
-                <br/><br/>
-                {new Date(chatHistoryElement.created_at).toDateString()}
+                <ReactMarkdown rehypePlugins={[rehypeRaw]} css={markdownStyles}>{chatHistoryElement.message}</ReactMarkdown>
+                <i css={dateStyles}>{new Date(chatHistoryElement.created_at).toDateString()}</i>
               </CardContent>
             </Card>
           </div>
