@@ -8,8 +8,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <NextSeo
         title="markdown messenger"
-        description="online messenger"
-        canonical="https://www.tincan.com/"
+        description="online messenger with markdown support"
+        canonical="https://markdown-messenger.herokuapp.com/"
       />
       <Head>
         <link rel="icon" href="images/logo.ico" />
