@@ -16,8 +16,25 @@ const markdownStyles = css`
 
   & > * {
     max-width: 100%;
+    margin: 1rem;
   }
+
+  img, iframe{
+    margin: 0 0 1em 0;
+  }
+
 `;
+
+const timeStampStyles = css`
+  margin: 2em 0;
+  width: 100%;
+  text-align: center;
+  color: grey;
+`;
+
+const TimeStamp = ({date}:{date: Date;}) => {
+  return <div css={timeStampStyles}>{date.toDateString()}</div>;
+} 
 
 export default function ChatHistory(props: {
   selectedContact: ContactInformation, 
@@ -48,52 +65,63 @@ export default function ChatHistory(props: {
 
   return (
     <div css={css`${chatHistoryStyles} height: ${height}px;`} id={`chat-history`}>
-      {props.chatHistory instanceof Array && props.chatHistory.map((chatHistoryElement) => {
+      {props.chatHistory instanceof Array && props.chatHistory.map((chatHistoryElement, index) => {
         return (
-          <div
-            key={`ChatHistory_message_${chatHistoryElement.email}_${chatHistoryElement.created_at}`}
-            css={css`
-              margin: 50px 0;
-              display: flex;
-              flex-wrap: wrap;
-              gap: 10px;
-              ${chatHistoryElement.email !== props.selectedContact.email
-                ? `justify-content: right;
-                  flex-direction: row-reverse;
-                  padding-right: 10px;
-                `
-                : `justify-content: left;
-                padding-left: 10px;
-                `}
-            `}
-          >
-            <Avatar
-              alt={`profile picture ${chatHistoryElement.email}`}
-              src={
-                chatHistoryElement.email !== props.selectedContact.email
-                  ? props.localAvatarURL
-                  : props.contactAvatarURL
-              } // get corresponding Avatar from database
-            />
-            <Card
+          <div key={`ChatHistory_element_${chatHistoryElement.email}_${chatHistoryElement.created_at}`}>
+            {
+              (index === 0 || new Date(chatHistoryElement.created_at).toDateString() !== new Date(props.chatHistory[index	- 1].created_at).toDateString()) ? <TimeStamp date={new Date(chatHistoryElement.created_at)} /> : null
+            }
+            <div
               css={css`
-                color: white;
-                overflow: auto;
-
+                margin: 50px 0;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
                 ${chatHistoryElement.email !== props.selectedContact.email
-                  ? `background-color: DodgerBlue;`
-                  : `background-color: #454545;`}
+                  ? `justify-content: right;
+                    flex-direction: row-reverse;
+                    padding-right: 10px;
+                    margin-left: 1rem;
+                  `
+                  : `justify-content: left;
+                  padding-left: 10px;
+                  margin-right: 1rem;
+                  `}
               `}
             >
-              <CardContent>
+              <Avatar
+                alt={`profile picture ${chatHistoryElement.email}`}
+                src={
+                  chatHistoryElement.email !== props.selectedContact.email
+                    ? props.localAvatarURL
+                    : props.contactAvatarURL
+                } // get corresponding Avatar from database
+              />
+              <div
+                css={css`
+                  color: white;
+                  overflow: auto;
+                  border-radius: 10px;
+
+                  .messageTime{
+                    margin: 0 1em 1em 1em;
+                    filter: opacity(0.5);
+                  }
+
+                  ${chatHistoryElement.email !== props.selectedContact.email
+                    ? `background-color: DodgerBlue;`
+                    : `background-color: #454545;`}
+                `}
+              >
                 <ReactMarkdown 
                   rehypePlugins={[rehypeRaw]} 
                   css={markdownStyles}
                 >
                   {chatHistoryElement.message}
                 </ReactMarkdown>
-              </CardContent>
-            </Card>
+                <p className='messageTime'>{new Date(chatHistoryElement.created_at).toLocaleTimeString()}</p>
+              </div>
+            </div>
           </div>
         );
       })}
