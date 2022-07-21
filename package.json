@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@emotion/css": "^11.9.0",
@@ -48,6 +49,7 @@
     "@types/email-validator": "^1.0.6",
     "@types/jwt-decode": "^3.1.0",
     "@types/node": "^18.0.0",
+    "cypress": "^10.3.0",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",
     "jwt-decode": "^3.1.2",
