@@ -56,7 +56,8 @@ export default function Layout() {
   const [alert, setAlert] = useState({} as { severity: AlertColor; message: string});
   
   useEffect(()=>{
-    window.addEventListener("resize", ()=>{checkWindowSize(setMobile)});
+    // breaks the application for some poeple if they open thier keyboard on mobile -> laptop mode
+    // window.addEventListener("resize", ()=>{checkWindowSize(setMobile)});
     checkWindowSize(setMobile);
   }, []);
 
@@ -89,14 +90,14 @@ export default function Layout() {
                 setSearch(event.target.value);
               }}
             />
-            <ContactList search={search} setSearch={setSearch} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} contacts={contacts} alert={alert}/>
+            <ContactList search={search} setSearch={setSearch} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} contacts={contacts} alert={alert} mobile={mobile}/>
             <LinkActionInterface />
           </header>
           <main>
             <Chat selectedContact={contacts[selectedIndex]}/>
+            <MessagingInterface selectedContact={contacts[selectedIndex]}/>
           </main>
         </div>
-        <MessagingInterface selectedContact={contacts[selectedIndex]}/>
       </div>
     ); 
   }else{
@@ -122,7 +123,7 @@ export default function Layout() {
             setSearch(event.target.value);
           }}
         />
-        <ContactList search={search} setSearch={setSearch} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} contacts={contacts} alert={alert} setMobileContactSelected={setMobileContactSelected}/>
+        <ContactList search={search} setSearch={setSearch} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} contacts={contacts} alert={alert} setMobileContactSelected={setMobileContactSelected} mobile={mobile}/>
         <LinkActionInterface />
       </header>;
     }

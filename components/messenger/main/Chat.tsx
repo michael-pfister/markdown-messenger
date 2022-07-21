@@ -14,17 +14,17 @@ export type ChatHistoryElement = {
 }
 
 const chatStyles = css`
-  //background-color: #1c1c1c;
+  background-color: #f2f2f2;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
 
-  background-image: url('/images/minimal-chat-wallpaper.jpg');
+  /* background-image: url('/images/minimal-chat-wallpaper.jpg');
   background-size: auto;
   background-position: center;
   //background-position-y: -80vh;
   background-repeat: no-repeat;
-  background-color: #191c21;
+  background-color: #191c21; */
 
   & > * {
     width: 100%;

@@ -8,9 +8,6 @@ import rehypeRaw from 'rehype-raw';
 
 const chatHistoryStyles = css`
   overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 0px;
-}
 `;
 
 const markdownStyles = css`
@@ -20,11 +17,6 @@ const markdownStyles = css`
   & > * {
     width: 100%;
   }
-`;
-
-const dateStyles = css`
-  width: 100%;
-  font-size: 0.8em;
 `;
 
 export default function ChatHistory(props: {
@@ -46,8 +38,8 @@ export default function ChatHistory(props: {
     messagingInterfaceObserver.observe(document.getElementById('messaging-interface') as HTMLElement);
   }, []);
 
-  // 💀
   useEffect(() => {
+    setHeight(window.innerHeight - (document.getElementById('messaging-interface') as HTMLElement).clientHeight);
     const chatHistory = document.getElementById('chat-history');
     if (chatHistory) {
       chatHistory.scrollTop = chatHistory.scrollHeight;
@@ -94,7 +86,6 @@ export default function ChatHistory(props: {
             >
               <CardContent>
                 <ReactMarkdown rehypePlugins={[rehypeRaw]} css={markdownStyles}>{chatHistoryElement.message}</ReactMarkdown>
-                <i css={dateStyles}>{new Date(chatHistoryElement.created_at).toDateString()}</i>
               </CardContent>
             </Card>
           </div>

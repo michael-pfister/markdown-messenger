@@ -17,7 +17,7 @@ const chatListStyles = css`
 `;
 
 const chatListButtonStyles = css`
-  cursor: pointer;
+  cursor: pointer; 
   padding: 0;
 `;
 
@@ -31,11 +31,12 @@ export default function ContactList(props: {
     severity: AlertColor;
     message: string;
   };
+  mobile: boolean;
   setMobileContactSelected?: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 
   return (
-    <List css={chatListStyles}>
+    <List css={css`${chatListStyles} width: ${props.mobile ? "300px" : "auto"};`}>
       {Object.keys(props.alert).length ? <Grid item xs={12}>
             <Alert severity={props.alert.severity}>
                 <AlertTitle>{props.alert.severity}</AlertTitle>

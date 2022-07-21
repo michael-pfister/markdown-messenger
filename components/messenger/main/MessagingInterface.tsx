@@ -46,6 +46,7 @@ export default function MessagingInterface(props: {
             onChange={(value)=>{
               setPreview(value as string);
             }}
+            value={preview}
           />
           <IconButton color="primary" aria-label="send message" component="span" onClick={()=>{
             props.selectedContact && fetch('/api/messages', {
@@ -58,11 +59,13 @@ export default function MessagingInterface(props: {
                 message: preview
               })})
               .then((response)=>{
-                // finishn this
+                // finish this
                 if (response.status !== 200){
                   response.json().then((data)=>{
                     console.log(data);
                   });
+                }else{
+                  setPreview('');
                 }});
           }}>
             <SendIcon />
