@@ -7,21 +7,24 @@ import { ContactInformation } from '../Layout';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { Message } from './ChatHistory';
+import { CurrencyYenTwoTone } from '@mui/icons-material';
 
 const styles = {
   root: css`
-    background-color: #1e1e1e;
+    background-color: #f2f2f2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   `,
 
   preview: css`
-    padding: 1em;
-    max-height: 40vh;
-    overflow: auto;
-    background-color: dodgerblue;
-    color: white;
+    margin: 1em;
   `,
 
   messagingControls: css`
+    width: 100%;
+    background-color: #1e1e1e;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -35,9 +38,7 @@ export default function MessagingInterface(props: {
 
   return (
     <div css={styles.root} id='messaging-interface'>
-        {preview.length ? <div css={styles.preview}>
-          <ReactMarkdown rehypePlugins={[rehypeRaw]}>{preview}</ReactMarkdown>
-        </div> : null}
+        {preview.length ? <div css={styles.preview}><Message isBlue={true} message={preview} timestamp={new Date().toLocaleTimeString()} /></div> : null}
         <div css={styles.messagingControls}>
           <Editor
             defaultLanguage="html"
