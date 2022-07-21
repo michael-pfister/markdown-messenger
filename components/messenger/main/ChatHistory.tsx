@@ -13,6 +13,10 @@ const chatHistoryStyles = css`
 const markdownStyles = css`
   display: flex;
   flex-wrap: wrap;
+
+  & > * {
+    max-width: 100%;
+  }
 `;
 
 export default function ChatHistory(props: {
@@ -84,12 +88,8 @@ export default function ChatHistory(props: {
               <CardContent>
                 <ReactMarkdown 
                   rehypePlugins={[rehypeRaw]} 
-                  css={css`
-                  ${markdownStyles} 
-                  & > * {
-                    width: ${document.getElementById('chat-history')?.clientWidth};
-                  }
-                `}>
+                  css={markdownStyles}
+                >
                   {chatHistoryElement.message}
                 </ReactMarkdown>
               </CardContent>
