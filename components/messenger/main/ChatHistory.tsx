@@ -13,10 +13,6 @@ const chatHistoryStyles = css`
 const markdownStyles = css`
   display: flex;
   flex-wrap: wrap;
-
-  & > * {
-    width: 100%;
-  }
 `;
 
 export default function ChatHistory(props: {
@@ -55,6 +51,7 @@ export default function ChatHistory(props: {
             css={css`
               margin: 50px 0;
               display: flex;
+              flex-wrap: wrap;
               gap: 10px;
               ${chatHistoryElement.email !== props.selectedContact.email
                 ? `justify-content: right;
@@ -85,7 +82,16 @@ export default function ChatHistory(props: {
               `}
             >
               <CardContent>
-                <ReactMarkdown rehypePlugins={[rehypeRaw]} css={markdownStyles}>{chatHistoryElement.message}</ReactMarkdown>
+                <ReactMarkdown 
+                  rehypePlugins={[rehypeRaw]} 
+                  css={css`
+                  ${markdownStyles} 
+                  & > * {
+                    width: ${document.getElementById('chat-history')?.clientWidth};
+                  }
+                `}>
+                  {chatHistoryElement.message}
+                </ReactMarkdown>
               </CardContent>
             </Card>
           </div>
