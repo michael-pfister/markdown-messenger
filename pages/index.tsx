@@ -210,7 +210,7 @@ const LandingPage = () => {
           <Image src='/images/TechnologyIcons/nextjs-logo.png' alt='Next.js' width={`${1626/1347*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/socketio-logo.png' alt='socket.io' width={`${1200/600*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/cassandra-logo.jpg' alt='Cassandra' width={`${500/306*logoHeight}px`} height={`${logoHeight}px`}/>
-          <Image src='/images/TechnologyIcons/react-logo.jpg' alt='React' width={`${960/540*logoHeight}px`} height={`${logoHeight}px`}/>
+          <Image src='/images/TechnologyIcons/jwt-logo.png' alt='JSON Web Tokens' width={`${1280/800*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/typescript-logo.png' alt='TypeScript' width={`${740/405*logoHeight}px`} height={`${logoHeight}px`}/>
           <Image src='/images/TechnologyIcons/mui-logo.png' alt='Material UI' width={`${1400/787*logoHeight}px`} height={`${logoHeight}px`}/>
         </div>
